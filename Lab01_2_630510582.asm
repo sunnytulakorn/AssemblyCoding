@@ -1,0 +1,49 @@
+.MODEL	SMALL
+.STACK	100H
+.DATA
+CR	EQU	0DH
+LF	EQU	0AH
+MSG1	DB	'ENTER THREE INITIALS: $'
+MSG2	DB	CR,LF
+CHAR	DB	?,'$'
+MSG3	DB	CR,LF
+CHAR1	DB	?,'$'
+MSG4	DB	CR,LF
+CHAR2	DB	?,'$'
+.CODE
+MAIN 	PROC
+	MOV	AX,@DATA
+	MOV	DS,AX
+; print msg
+	LEA	DX,MSG1
+	MOV	AH,9
+	INT 	21H
+; input 1
+	MOV	AH,1
+	INT 	21H
+	MOV	CHAR,AL
+; input 2
+	MOV	AH,1
+	INT 	21H
+	MOV	CHAR1,AL
+; input 3
+	MOV	AH,1
+	INT 	21H
+	MOV	CHAR2,AL
+;new line and 1st result
+	LEA	DX,MSG2
+	MOV	AH,9
+	INT	21H
+;new line and 2nd result
+	LEA	DX,MSG3
+	MOV	AH,9
+	INT	21H
+;new line and 3rd result
+	LEA	DX,MSG4
+	MOV	AH,9
+	INT	21H
+; DOS exit
+	MOV	AH,4CH
+	INT	21H	
+MAIN	ENDP
+	END MAIN	 

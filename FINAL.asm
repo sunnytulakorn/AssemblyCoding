@@ -1,0 +1,46 @@
+.MODEL	SMALL
+.STACK	100H
+.DATA 
+XYZ	DW	63,50,72,97,47,35,48,1,2,99 ; x
+	DW	49,80,80,57,20,55,63,1,2,13 ; y
+	DW	10 DUP(0)		    ; z
+THREE	EQU	3
+.CODE
+MAIN	PROC
+	MOV	AX, @DATA
+	MOV	DS, AX
+
+	XOR	AX,AX
+	XOR	BX,BX
+	MOV	CX,10
+	MOV SI,0
+	MOV	DI,20
+LOOP_:
+	MOV	AX,XYZ[SI] ; x position
+	MOV	BX,XYZ[DI] ; y position
+	MUL	BX ;คูณ x กับ y
+	XOR BX,BX
+	MOV	BX,3
+	XOR	DX,DX
+	DIV	BX ; นำผลคูณมาหาร 3
+	XOR	BP,BP
+	MOV	BP,40
+	ADD	XYZ[BP],AX ; add value in z line
+	ADD	SI,2
+	ADD	DI,2
+	ADD	BP,2
+	CALL	OUTDEC ; display
+	MOV	AH,2
+	MOV	DL,' '
+	INT	21H
+	LOOP	LOOP_
+
+EXIT:
+	MOV	AH,4CH
+	INT	21H
+MAIN	ENDP
+INCLUDE OUTDEC.ASM
+	END MAIN
+	
+	
+	
